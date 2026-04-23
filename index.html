@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Temps Partiel</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+  
+  <div class="clock">
+
+    <div class="hand-rotate" id="minuteHand">
+    <div class="minute"></div>
+    </div>
+
+    <div class="center"></div>
+
+    <!-- 12 -->
+    <div class="number n12"
+     onmouseenter="moveHand(12); setBg('bg-n12'); playScan()"
+     onmouseleave="resetBg()">
+      <img src="images/stickercara.png">
+      <div class="hover-note top-note">
+        <p>Une orange <br>
+           trop parfaite.</p>
+      </div>
+    </div>
+
+  <!-- 1 -->
+  <div class="number n1"
+     onmouseenter="moveHand(1); setBg('bg-n1'); playScan()"
+     onmouseleave="resetBg()">
+    <img src="images/stickerempire.png">
+    <div class="hover-note top-note">
+      <p>Avez-vous la <br> 
+         carte scène?</p>
+    </div>
+    </div>
+
+  <!-- 2 -->
+  <div class="number n2"
+     onmouseenter="moveHand(2); setBg('bg-n2'); playScan()"
+     onmouseleave="resetBg()">
+    <img src="images/proudlycanadian2.png">
+    <div class="hover-note proudly-note">
+     <p>« Si je gagne <br>
+        le gros lot,<br> 
+        je t’amène à <br>
+        Las Vegas. »</p>
+    </div>
+  </div>
+
+  <!-- 3 -->
+    <div class="number n3"
+      onmouseenter="moveHand(3); setBg('bg-n3'); playScan()"
+      onmouseleave="resetBg()">
+      <img src="images/stickerbanane.png">
+      <div class="hover-note side-note">
+        <p>Un poulet,<br> un seul poulet.</p>
+      </div>
+  </div>
+
+  <!-- 4 -->
+    <div class="number n4"
+     onmouseenter="moveHand(4); setBg('bg-n4'); playScan()"
+     onmouseleave="resetBg()">
+      <img src="images/rabaisrose.png">
+      <div class="hover-note rabaisrose-note">
+        <p>
+        4011 * banane<br>
+        4409 * poire<br>
+        4036 * nectarine<br>
+        4045 * cerise<br>
+        4030 * kiwi
+       </p>
+        </div>
+    </div>
+
+  <!-- 5 -->
+    <div class="number n5"
+        onmouseenter="moveHand(5); setBg('bg-n5'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/stickergenv.png">
+        <div class="hover-note genvv-note">
+          <p>« Je vais payer comptant, mais je suis pas content de payer. »</p>
+        </div>
+    </div>
+
+  <!-- 6 -->
+    <div class="number n6"
+        onmouseenter="moveHand(6); setBg('bg-n6'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/proudlycanadian.png">
+        <div class="hover-note bottom-note">
+          <p>Un client achète pour 312$ de 6/49.</p>
+        </div>
+    </div>
+
+  <!-- 7 -->
+    <div class="number n7"
+        onmouseenter="moveHand(7); setBg('bg-n7'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/poire.png">
+        <div class="hover-note bottom-note">
+          <p>Le bip parfait.</p>
+        </div>
+    </div>
+
+  <!-- 8 -->
+    <div class="number n8"
+        onmouseenter="moveHand(8); setBg('bg-n8'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/stickergrapefruit.png">
+      <div class="hover-note grapefruit-note">
+          <p>Un client impatient m’interrompt. <br> 
+             Il veut que <br> 
+             je valide son gratteux.</p>
+        </div>
+    </div>
+
+  <!-- 9 -->
+    <div class="number n9"
+        onmouseenter="moveHand(9); setBg('bg-n9'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/stickermacintosh.png">
+        <div class="hover-note mcintosh-note">
+          <p>*Article inconnu*</p>
+        </div>
+   </div>
+
+  <!-- 10 -->
+    <div class="number n10"
+        onmouseenter="moveHand(10); setBg('bg-n10'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/melon.png">
+        <div class="hover-note melon-note">
+            <p>T'es-tu à <br> 
+               vendre, toi? <br>
+               tu ferais des <br>
+              beaux bébés<br></p>
+        </div>
+    </div>
+
+  <!-- 11 -->
+    <div class="number n11"
+        onmouseenter="moveHand(11); setBg('bg-n11'); playScan()"
+        onmouseleave="resetBg()">
+        <img src="images/rabaisbleu.png">
+        <div class="hover-note top-note">
+          <p>Une caisse qui respire enfin.</p>
+        </div>
+    </div>
+
+
+
+  <audio id="scanSound" preload="auto">
+  <source src="son/bip.wav" type="audio/wav">
+  </audio>
+
+  <audio id="printSound" preload="auto">
+  <source src="son/print.wav" type="audio/wav">
+  </audio>
+
+
+
+
+
+
+  <script>
+
+  let currentAngle = -90;
+
+  const scanBase = new Audio("son/bip.wav");
+  scanBase.preload = "auto";
+  scanBase.load();
+
+  function moveHand(number) {
+    let targetAngle = (number * 30) - 90;
+    let diff = targetAngle - currentAngle;
+
+    if (diff > 180) targetAngle -= 360;
+    else if (diff < -180) targetAngle += 360;
+
+    currentAngle = targetAngle;
+
+    document.getElementById("minuteHand").style.transform =
+      `rotate(${currentAngle}deg)`;
+  }
+
+  function setBg(bgClass) {
+    document.body.classList.remove(
+      "bg-n12","bg-n1","bg-n2","bg-n3","bg-n4","bg-n5",
+      "bg-n6","bg-n7","bg-n8","bg-n9","bg-n10","bg-n11"
+    );
+    document.body.classList.add(bgClass);
+  }
+
+  function resetBg() {
+    document.body.classList.remove(
+      "bg-n12","bg-n1","bg-n2","bg-n3","bg-n4","bg-n5",
+      "bg-n6","bg-n7","bg-n8","bg-n9","bg-n10","bg-n11"
+    );
+  }
+
+  function playScan() {
+    const scan = scanBase.cloneNode();
+    scan.volume = 0.35;
+    scan.playbackRate = 1;
+    scan.play().catch(() => {});
+  }
+
+  document.addEventListener("click", () => {
+    scanBase.play().then(() => {
+      scanBase.pause();
+      scanBase.currentTime = 0;
+    }).catch(() => {});
+  }, { once: true })
+
+function playPrint() {
+  const sound = document.getElementById("printSound");
+  if (!sound) return;
+
+  sound.pause();
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
+}
+
+console.log(aboutBtn);
+console.log(printSound);
+
+</script>
+
+<div class="receipt-top-left">
+  <p>IGA EXTRA MARCHÉ VINCENT</p>
+  <p>(450)670-6135</p>
+</div>
+
+<div class="receipt-top-right">
+  <p>POSTE&nbsp;&nbsp;OPER&nbsp;03/15/26</p>
+  <p>1477&nbsp;&nbsp;&nbsp;8506&nbsp;&nbsp;&nbsp;116&nbsp;&nbsp;12:16:10</p>
+</div>
+
+<div class="receipt-bottom-left">
+  <p>SERVI PAR:CLAUDIA</p>
+  <p>NUMÉRO CARTE MEMBRE ********941</p>
+</div>
+
+<div class="bouton" onmouseenter="playPrint()"> 
+  <span class="about-dot"></span>
+  <span>À PROPOS</span>
+
+<div class="hover-note about-note">
+   <p>
+    ARCHIVE DE MOMENTS
+    BANALS COLLECTÉS
+    À LA CAISSE. <br><br>
+    MON 8 À 5 EST LE SUJET.<br>
+    DES MOMENTS BANALS, ENTRE <br>
+    DEUX BIPS. RIEN QUI SORT DE L'ORDINAIRE
+    JUSTE RÉPÉTÉS.
+    MON QUOTIDIEN S'ACCUMULE, COMME UNE FACTURE.
+    RÉVÉLANT LES TENSIONS
+    DU QUOTIDIEN.
+    </p>
+  </div>
+</div>
+
+
+
+</body>
+</html>
